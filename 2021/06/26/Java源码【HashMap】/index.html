@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="https://wahwz.github.io">
   <title>Java源码【HashMap】 | 我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="注: 本篇博客是按照JDK1.8中的 HashMap 展开的1. 问: HashMap 的数据结构?答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。  2. 问: hash 是怎是实现的? 为什么要这样实现?答: 在JDK1.8中, hash 方法是通过对象的 hashCode() 的高16位与低16位异或得到的, 源码如下 1234static f">
+  <meta name="description" content="注: 本篇博客是按照JDK1.8中的 HashMap 展开的1. 问: HashMap 的数据结构?答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java源码【HashMap】">
 <meta property="og:url" content="https://wahwz.github.io/2021/06/26/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/index.html">
 <meta property="og:site_name" content="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎">
-<meta property="og:description" content="注: 本篇博客是按照JDK1.8中的 HashMap 展开的1. 问: HashMap 的数据结构?答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。  2. 问: hash 是怎是实现的? 为什么要这样实现?答: 在JDK1.8中, hash 方法是通过对象的 hashCode() 的高16位与低16位异或得到的, 源码如下 1234static f">
+<meta property="og:description" content="注: 本篇博客是按照JDK1.8中的 HashMap 展开的1. 问: HashMap 的数据结构?答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://wahwz.github.io/assets/img/1.png">
 <meta property="article:published_time" content="2021-06-26T10:20:40.000Z">
-<meta property="article:modified_time" content="2021-06-26T10:27:09.366Z">
+<meta property="article:modified_time" content="2021-06-26T10:31:04.913Z">
 <meta property="article:author" content="我爱喝旺仔">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="数据结构">
@@ -172,6 +172,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="注-本篇博客是按照JDK1-8中的-HashMap-展开的"><a href="#注-本篇博客是按照JDK1-8中的-HashMap-展开的" class="headerlink" title="注: 本篇博客是按照JDK1.8中的 HashMap 展开的"></a>注: 本篇博客是按照JDK1.8中的 HashMap 展开的</h2><h3 id="1-问-HashMap-的数据结构"><a href="#1-问-HashMap-的数据结构" class="headerlink" title="1. 问: HashMap 的数据结构?"></a><strong>1. 问: HashMap 的数据结构?</strong></h3><p>答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。</p>
+<span id="more"></span>
+
+
 <hr>
 <h3 id="2-问-hash-是怎是实现的-为什么要这样实现"><a href="#2-问-hash-是怎是实现的-为什么要这样实现" class="headerlink" title="2. 问: hash 是怎是实现的? 为什么要这样实现?"></a><strong>2. 问: hash 是怎是实现的? 为什么要这样实现?</strong></h3><p>答: 在JDK1.8中, hash 方法是通过对象的 hashCode() 的高16位与低16位异或得到的, 源码如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
