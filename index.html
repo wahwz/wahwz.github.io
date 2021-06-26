@@ -145,6 +145,129 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java源码【HashMap】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/26/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/">Java源码【HashMap】</a>
+    </h1>
+  
+
+        
+        <a href="/2021/06/26/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/" class="archive-article-date">
+  	<time datetime="2021-06-26T10:20:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="注-本篇博客是按照JDK1-8中的-HashMap-展开的"><a href="#注-本篇博客是按照JDK1-8中的-HashMap-展开的" class="headerlink" title="注: 本篇博客是按照JDK1.8中的 HashMap 展开的"></a>注: 本篇博客是按照JDK1.8中的 HashMap 展开的</h2><h3 id="1-问-HashMap-的数据结构"><a href="#1-问-HashMap-的数据结构" class="headerlink" title="1. 问: HashMap 的数据结构?"></a><strong>1. 问: HashMap 的数据结构?</strong></h3><p>答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。</p>
+<hr>
+<h3 id="2-问-hash-是怎是实现的-为什么要这样实现"><a href="#2-问-hash-是怎是实现的-为什么要这样实现" class="headerlink" title="2. 问: hash 是怎是实现的? 为什么要这样实现?"></a><strong>2. 问: hash 是怎是实现的? 为什么要这样实现?</strong></h3><p>答: 在JDK1.8中, hash 方法是通过对象的 hashCode() 的高16位与低16位异或得到的, 源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样实现是因为在一般情况下数组大小都不会超过2^16, 而哈希值是通过 hash 方法得到的值 %size 得到的, 源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent, <span class="keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">    ....</span><br><span class="line">    <span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="keyword">null</span>) <span class="comment">// 这里(n - 1) &amp; hash相当于取%操作</span></span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样做有效的利用了高16位的信息, 可以减少哈希碰撞, 降低时间复杂度</p>
+<hr>
+<h3 id="3-问-HashMap-的数组初始大小是多大-是何时初始化大小的"><a href="#3-问-HashMap-的数组初始大小是多大-是何时初始化大小的" class="headerlink" title="3. 问: HashMap 的数组初始大小是多大? 是何时初始化大小的?"></a><strong>3. 问: HashMap 的数组初始大小是多大? 是何时初始化大小的?</strong></h3><p>答: HashMap 的数组初始大小是16, 并不是在创建对象时初始化的, HashMap 是懒加载机制, 和 ArrayList 一样, 都是在第一次添加元素时初始化数组长度的</p>
+<hr>
+<h3 id="4-问-loadFactor-是什么-什么时候会触发扩容机制"><a href="#4-问-loadFactor-是什么-什么时候会触发扩容机制" class="headerlink" title="4. 问: loadFactor 是什么? 什么时候会触发扩容机制?"></a><strong>4. 问: loadFactor 是什么? 什么时候会触发扩容机制?</strong></h3><p>答: loadFactor 是负载因子, 主要作用就是判断数组是否需要扩容, 默认值是0.75, 当数组实际占用大小超过 size * loadFactor 时, 会出发扩容机制</p>
+<hr>
+<h3 id="5-问-简述-HashMap-中-put-方法的过程"><a href="#5-问-简述-HashMap-中-put-方法的过程" class="headerlink" title="5. 问: 简述 HashMap 中 put 方法的过程?"></a><strong>5. 问: 简述 HashMap 中 put 方法的过程?</strong></h3><p>答: </p>
+<ul>
+<li>先调用 hash 方法算出 key 对应的数组下标</li>
+<li>如果没有出现哈希冲突, 则直接放进数组; 如果出现哈希冲突, 则使用尾插法放在链表末尾</li>
+<li>如果链表长度超过8并且数组长度超过64则会将当前链表转化为红黑树(PS:如果链表长度超过8但数组长度不超过64不会进行树化操作, 只会进行扩容)</li>
+<li>如果节点的 key 已经存在, 则替换 value 即可</li>
+</ul>
+<p><img src="https://wahwz.github.io/assets/img/1.png" alt="put操作.png"></p>
+<hr>
+<h3 id="6-问-数组扩容的过程"><a href="#6-问-数组扩容的过程" class="headerlink" title="6. 问: 数组扩容的过程?"></a><strong>6. 问: 数组扩容的过程?</strong></h3><p>答: 创建一个新的数组, 其容量为旧数组的两倍, 并重新计算旧数组中结点的存储位置, 结点在新数组中的位置只有两种, 原下标位置或原下标 + 旧数组的大小</p>
+<hr>
+<h3 id="7-问-为什么要使用红黑树-为什么不一直使用红黑树"><a href="#7-问-为什么要使用红黑树-为什么不一直使用红黑树" class="headerlink" title="7. 问: 为什么要使用红黑树? 为什么不一直使用红黑树?"></a><strong>7. 问: 为什么要使用红黑树? 为什么不一直使用红黑树?</strong></h3><p>答: 因为遍历链表的时间复杂度是O(n), 而在红黑树中操作时间复杂度是O(logn); 在链表较短时, 使用链表和红黑树耗时差别不大, 而且红黑树比较耗费性能, 所以开发人员权衡利弊之后, 定义了树化阈值8</p>
+<hr>
+<h3 id="8-问-HashMap-的底层数组长度为何总是2-n"><a href="#8-问-HashMap-的底层数组长度为何总是2-n" class="headerlink" title="8. 问: HashMap 的底层数组长度为何总是2^n?"></a><strong>8. 问: HashMap 的底层数组长度为何总是2^n?</strong></h3><p>答: 1. 使数据分布均匀，减少碰撞； 2. 当 length 是2^n时, hash 方法对 length 取%就相当于 h &amp; (length - 1), 相对于取%运算来说, 位运算要快得多</p>
+<hr>
+<h3 id="9-问-HashMap-LinkedHashMap-TreeMap-有什么区别"><a href="#9-问-HashMap-LinkedHashMap-TreeMap-有什么区别" class="headerlink" title="9. 问: HashMap, LinkedHashMap, TreeMap 有什么区别?"></a><strong>9. 问: HashMap, LinkedHashMap, TreeMap 有什么区别?</strong></h3><p>答: </p>
+<ul>
+<li>HashMap 无序, 插入删除高效快速</li>
+<li>LinkedHashMap 保存了插入时的顺序, 在遍历的时候可以按照插入顺序进行遍历</li>
+<li>TreeMap 实现了 SortMap 接口, 可以保证 key 值有序(默认按键值升序排序, 也可以指定排序的比较器)</li>
+</ul>
+<hr>
+<h3 id="10-问-HashMap-的线程不安全体现在哪里"><a href="#10-问-HashMap-的线程不安全体现在哪里" class="headerlink" title="10. 问: HashMap 的线程不安全体现在哪里?"></a><strong>10. 问: HashMap 的线程不安全体现在哪里?</strong></h3><p>答: <strong>在多线程环境下，会发生数据覆盖的情况</strong><br>因为 HashMap 的 put 方法在没有哈希碰撞的条件下是直接插入元素, 如果线程A当前已经判断这个位置为空, 然后线程A挂起, 线程B进来也发现这个位置是空的然后将值插入了进来, 此时线程A重新运行, 则会覆盖掉线程B插入的值</p>
+
+      
+
+	<!-- 增加版权声明 -->
+
+	
+	
+	  <div class="declare" hidden="hidden"></div>
+	
+
+	<!-- 增加版权声明结束 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/06/26/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Java源码【LinkedList】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
