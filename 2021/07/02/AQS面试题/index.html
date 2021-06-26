@@ -6,23 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://wahwz.github.io">
-  <title>Java源码【HashMap】 | 我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎</title>
+  <title>AQS面试题 | 我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="注: 本篇博客是按照JDK1.8中的 HashMap 展开的1. 问: HashMap 的数据结构?答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。">
+  <meta name="description" content="1. 问: 什么是AQS?答: AQS 全称 AbstractQueuedSynchronizer (抽象的队列同步器), 是除了 Java 自带的 synchronized 关键字之外的锁机制">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java源码【HashMap】">
-<meta property="og:url" content="https://wahwz.github.io/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/index.html">
+<meta property="og:title" content="AQS面试题">
+<meta property="og:url" content="https://wahwz.github.io/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎">
-<meta property="og:description" content="注: 本篇博客是按照JDK1.8中的 HashMap 展开的1. 问: HashMap 的数据结构?答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。">
+<meta property="og:description" content="1. 问: 什么是AQS?答: AQS 全称 AbstractQueuedSynchronizer (抽象的队列同步器), 是除了 Java 自带的 synchronized 关键字之外的锁机制">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://wahwz.github.io/assets/img/1.png">
-<meta property="article:published_time" content="2021-06-28T10:20:40.000Z">
-<meta property="article:modified_time" content="2021-06-26T13:00:04.122Z">
+<meta property="article:published_time" content="2021-07-02T03:02:41.000Z">
+<meta property="article:modified_time" content="2021-06-26T13:05:53.356Z">
 <meta property="article:author" content="我爱喝旺仔">
 <meta property="article:tag" content="Java">
-<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="锁">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://wahwz.github.io/assets/img/1.png">
   
     <link rel="alternative" href="/atom.xml" title="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎" type="application/atom+xml">
   
@@ -151,66 +149,55 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Java源码【HashMap】" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-AQS面试题" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Java源码【HashMap】
+      AQS面试题
     </h1>
   
 
         
-        <a href="/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/" class="archive-article-date">
-  	<time datetime="2021-06-28T10:20:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-28</time>
+        <a href="/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2021-07-02T03:02:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="注-本篇博客是按照JDK1-8中的-HashMap-展开的"><a href="#注-本篇博客是按照JDK1-8中的-HashMap-展开的" class="headerlink" title="注: 本篇博客是按照JDK1.8中的 HashMap 展开的"></a>注: 本篇博客是按照JDK1.8中的 HashMap 展开的</h2><h3 id="1-问-HashMap-的数据结构"><a href="#1-问-HashMap-的数据结构" class="headerlink" title="1. 问: HashMap 的数据结构?"></a><strong>1. 问: HashMap 的数据结构?</strong></h3><p>答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。</p>
+        <h3 id="1-问-什么是AQS"><a href="#1-问-什么是AQS" class="headerlink" title="1. 问: 什么是AQS?"></a><strong>1. 问: 什么是AQS?</strong></h3><p>答: AQS 全称 AbstractQueuedSynchronizer (抽象的队列同步器), 是除了 Java 自带的 synchronized 关键字之外的锁机制</p>
 <span id="more"></span>
 
 
 <hr>
-<h3 id="2-问-hash-是怎是实现的-为什么要这样实现"><a href="#2-问-hash-是怎是实现的-为什么要这样实现" class="headerlink" title="2. 问: hash 是怎是实现的? 为什么要这样实现?"></a><strong>2. 问: hash 是怎是实现的? 为什么要这样实现?</strong></h3><p>答: 在JDK1.8中, hash 方法是通过对象的 hashCode() 的高16位与低16位异或得到的, 源码如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样实现是因为在一般情况下数组大小都不会超过 $2^{16}$, 而哈希值是通过 hash 方法得到的值 %size 得到的, 源码如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent, <span class="keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">    ....</span><br><span class="line">    <span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="keyword">null</span>) <span class="comment">// 这里(n - 1) &amp; hash相当于取%操作</span></span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样做有效的利用了高16位的信息, 可以减少哈希碰撞, 降低时间复杂度</p>
-<hr>
-<h3 id="3-问-HashMap-的数组初始大小是多大-是何时初始化大小的"><a href="#3-问-HashMap-的数组初始大小是多大-是何时初始化大小的" class="headerlink" title="3. 问: HashMap 的数组初始大小是多大? 是何时初始化大小的?"></a><strong>3. 问: HashMap 的数组初始大小是多大? 是何时初始化大小的?</strong></h3><p>答: HashMap 的数组初始大小是16, 并不是在创建对象时初始化的, HashMap 是懒加载机制, 和 ArrayList 一样, 都是在第一次添加元素时初始化数组长度的</p>
-<hr>
-<h3 id="4-问-loadFactor-是什么-什么时候会触发扩容机制"><a href="#4-问-loadFactor-是什么-什么时候会触发扩容机制" class="headerlink" title="4. 问: loadFactor 是什么? 什么时候会触发扩容机制?"></a><strong>4. 问: loadFactor 是什么? 什么时候会触发扩容机制?</strong></h3><p>答: loadFactor 是负载因子, 主要作用就是判断数组是否需要扩容, 默认值是0.75, 当数组实际占用大小超过 size * loadFactor 时, 会出发扩容机制</p>
-<hr>
-<h3 id="5-问-简述-HashMap-中-put-方法的过程"><a href="#5-问-简述-HashMap-中-put-方法的过程" class="headerlink" title="5. 问: 简述 HashMap 中 put 方法的过程?"></a><strong>5. 问: 简述 HashMap 中 put 方法的过程?</strong></h3><p>答: </p>
-<ul>
-<li>先调用 hash 方法算出 key 对应的数组下标</li>
-<li>如果没有出现哈希冲突, 则直接放进数组; 如果出现哈希冲突, 则使用尾插法放在链表末尾</li>
-<li>如果链表长度超过8并且数组长度超过64则会将当前链表转化为红黑树(PS:如果链表长度超过8但数组长度不超过64不会进行树化操作, 只会进行扩容)</li>
-<li>如果节点的 key 已经存在, 则替换 value 即可</li>
+<h3 id="2-问-AQS的两大重要组成部分"><a href="#2-问-AQS的两大重要组成部分" class="headerlink" title="2. 问: AQS的两大重要组成部分?"></a><strong>2. 问: AQS的两大重要组成部分?</strong></h3><p>答: </p>
+<h4 id="①-状态变量-state"><a href="#①-状态变量-state" class="headerlink" title="①. 状态变量 state"></a>①. 状态变量 state</h4><ul>
+<li>互斥锁: 当 AQS 只实现为互斥锁的时候, 每次只要使用 CAS 将 state 的值从0变为1成功了就获取了锁, 可重入是通过不断把 state 更新加1实现的</li>
+<li>互斥锁+共享锁: 当 AQS 需要同时实现为互斥锁+共享锁的时候, 低16位存储互斥锁的状态, 高16位存储共享锁的状态, 主要用于实现读写锁</li>
 </ul>
-<p><img src="https://wahwz.github.io/assets/img/1.png" alt="put操作.png"></p>
+<h4 id="②-CHL-队列"><a href="#②-CHL-队列" class="headerlink" title="②. CHL 队列"></a>②. CHL 队列</h4><p>AQS 维护了一个双端队列, 所有加了”锁”线程(除了正在执行的), 都将会进入到这个队列中等待被唤醒(互斥锁模式下)</p>
 <hr>
-<h3 id="6-问-数组扩容的过程"><a href="#6-问-数组扩容的过程" class="headerlink" title="6. 问: 数组扩容的过程?"></a><strong>6. 问: 数组扩容的过程?</strong></h3><p>答: 创建一个新的数组, 其容量为旧数组的两倍, 并重新计算旧数组中结点的存储位置, 结点在新数组中的位置只有两种, 原下标位置或原下标 + 旧数组的大小</p>
-<hr>
-<h3 id="7-问-为什么要使用红黑树-为什么不一直使用红黑树"><a href="#7-问-为什么要使用红黑树-为什么不一直使用红黑树" class="headerlink" title="7. 问: 为什么要使用红黑树? 为什么不一直使用红黑树?"></a><strong>7. 问: 为什么要使用红黑树? 为什么不一直使用红黑树?</strong></h3><p>答: 因为遍历链表的时间复杂度是O(n), 而在红黑树中操作时间复杂度是O(logn); 在链表较短时, 使用链表和红黑树耗时差别不大, 而且红黑树比较耗费性能, 所以开发人员权衡利弊之后, 定义了树化阈值8</p>
-<hr>
-<h3 id="8-问-HashMap-的底层数组长度为何总是-2-n"><a href="#8-问-HashMap-的底层数组长度为何总是-2-n" class="headerlink" title="8. 问: HashMap 的底层数组长度为何总是 $2^n$ ?"></a><strong>8. 问: HashMap 的底层数组长度为何总是 $2^n$ ?</strong></h3><p>答: 1. 使数据分布均匀，减少碰撞； 2. 当 length 是 $2^n$ 时, hash 方法对 length 取%就相当于 h &amp; (length - 1), 相对于取%运算来说, 位运算要快得多</p>
-<hr>
-<h3 id="9-问-HashMap-LinkedHashMap-TreeMap-有什么区别"><a href="#9-问-HashMap-LinkedHashMap-TreeMap-有什么区别" class="headerlink" title="9. 问: HashMap, LinkedHashMap, TreeMap 有什么区别?"></a><strong>9. 问: HashMap, LinkedHashMap, TreeMap 有什么区别?</strong></h3><p>答: </p>
+<h3 id="3-问-AQS-独占锁获取-释放锁的原理"><a href="#3-问-AQS-独占锁获取-释放锁的原理" class="headerlink" title="3. 问: AQS 独占锁获取/释放锁的原理?"></a><strong>3. 问: AQS 独占锁获取/释放锁的原理?</strong></h3><p>答: </p>
 <ul>
-<li>HashMap 无序, 插入删除高效快速</li>
-<li>LinkedHashMap 保存了插入时的顺序, 在遍历的时候可以按照插入顺序进行遍历</li>
-<li>TreeMap 实现了 SortMap 接口, 可以保证 key 值有序(默认按键值升序排序, 也可以指定排序的比较器)</li>
+<li>获取: 获取同步状态时, 调用 acquire 方法, 维护一个同步队列, 使用 tryAcquire 方法安全地获取线程同步状态, 获取失败的线程会被构造同步节点并通过 addWaiter 方法加入到同步队列的尾部, 在队列中自旋     之后调用 acquireQueued 方法使得该节点以死循环的方式获取同步状态, 如果获取不到则阻塞, 被阻塞线程的唤醒主要依靠前驱节点的出队或被中断实现, 移出队列或停止自旋的条件是前驱节点是头结点且成功获取了同步状态</li>
+<li>释放: 释放同步状态时, 同步器调用 tryRelease 方法释放同步状态, 然后调用 unparkSuccessor 方法唤醒头节点的后继节点, 使后继节点重新尝试获取同步状态</li>
 </ul>
 <hr>
-<h3 id="10-问-HashMap-的线程不安全体现在哪里"><a href="#10-问-HashMap-的线程不安全体现在哪里" class="headerlink" title="10. 问: HashMap 的线程不安全体现在哪里?"></a><strong>10. 问: HashMap 的线程不安全体现在哪里?</strong></h3><p>答: <strong>在多线程环境下，会发生数据覆盖的情况</strong><br>因为 HashMap 的 put 方法在没有哈希碰撞的条件下是直接插入元素, 如果线程A当前已经判断这个位置为空, 然后线程A挂起, 线程B进来也发现这个位置是空的然后将值插入了进来, 此时线程A重新运行, 则会覆盖掉线程B插入的值</p>
+<h3 id="4-问-什么是哨兵节点"><a href="#4-问-什么是哨兵节点" class="headerlink" title="4. 问: 什么是哨兵节点?"></a><strong>4. 问: 什么是哨兵节点?</strong></h3><p>答: CHL 队列的头节点并不以一号等待线程, 而是一个空的 Node 节点, 这个节点被称为”哨兵节点”</p>
+<hr>
+<h3 id="5-问-waitStatus-是什么-有什么作用"><a href="#5-问-waitStatus-是什么-有什么作用" class="headerlink" title="5. 问: waitStatus 是什么? 有什么作用?"></a><strong>5. 问: waitStatus 是什么? 有什么作用?</strong></h3><p>答:<br>waitStatus 是 Node 节点中的一个成员变量, 表示当前Node结点的等待状态, 共有5种取值CANCELLED、SIGNAL、CONDITION、PROPAGATE、0</p>
+<ul>
+<li>CANCELLED(1): 在同步队列中等待的线程等待超时或被中断, 需要从同步队列中取消该 Node 的结点, 即放弃获取锁了</li>
+<li>SIGNAL(-1): 表示后继结点在等待当前结点唤醒, 说白了就是为了唤醒后继结点</li>
+<li>CONDITION(-2): 表示结点等待在 Condition 上, 当其他线程调用了 Condition 的 signal() 方法后, CONDITION 状态的结点将从等待队列转移到同步队列中, 等待获取同步锁</li>
+<li>PROPAGATE(-3): 共享模式下, 前继结点不仅会唤醒其后继结点, 同时也可能会唤醒后继的后继结点</li>
+<li>0: 新结点入队时的默认状态</li>
+</ul>
+<p><strong>注意: 负值表示结点处于有效等待状态, 而正值表示结点已被取消; 所以源码中很多地方用$&gt;$0、$&lt;$0来判断结点的状态是否正常</strong></p>
 <hr>
 
       
@@ -226,7 +213,7 @@
 		
 		<br>
 		<strong>本文链接：</strong>
-		<a rel="license" href="https://wahwz.github.io/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/">https://wahwz.github.io/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/</a>
+		<a rel="license" href="https://wahwz.github.io/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/">https://wahwz.github.io/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/</a>
 		<br>
 		<strong>版权声明：</strong>
 		本作品采用
@@ -283,7 +270,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">锁</a>
         		</li>
       		
 		</ul>
@@ -339,7 +326,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wahwz.github.io/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wahwz.github.io/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -353,18 +340,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/06/29/%E5%85%AB%E9%94%81%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          八锁问题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/06/27/Java%E6%BA%90%E7%A0%81%E3%80%90LinkedList%E3%80%91/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Java源码【LinkedList】</div>
+    <a href="/2021/07/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单例模式</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -391,7 +369,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8-%E6%9C%AC%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%98%AF%E6%8C%89%E7%85%A7JDK1-8%E4%B8%AD%E7%9A%84-HashMap-%E5%B1%95%E5%BC%80%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text">注: 本篇博客是按照JDK1.8中的 HashMap 展开的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%97%AE-HashMap-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">1. 问: HashMap 的数据结构?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%97%AE-hash-%E6%98%AF%E6%80%8E%E6%98%AF%E5%AE%9E%E7%8E%B0%E7%9A%84-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%99%E6%A0%B7%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.2.</span> <span class="toc-text">2. 问: hash 是怎是实现的? 为什么要这样实现?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%97%AE-HashMap-%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%9D%E5%A7%8B%E5%A4%A7%E5%B0%8F%E6%98%AF%E5%A4%9A%E5%A4%A7-%E6%98%AF%E4%BD%95%E6%97%B6%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%A7%E5%B0%8F%E7%9A%84"><span class="toc-number">1.3.</span> <span class="toc-text">3. 问: HashMap 的数组初始大小是多大? 是何时初始化大小的?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%97%AE-loadFactor-%E6%98%AF%E4%BB%80%E4%B9%88-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E8%A7%A6%E5%8F%91%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6"><span class="toc-number">1.4.</span> <span class="toc-text">4. 问: loadFactor 是什么? 什么时候会触发扩容机制?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%97%AE-%E7%AE%80%E8%BF%B0-HashMap-%E4%B8%AD-put-%E6%96%B9%E6%B3%95%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">5. 问: 简述 HashMap 中 put 方法的过程?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E9%97%AE-%E6%95%B0%E7%BB%84%E6%89%A9%E5%AE%B9%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">1.6.</span> <span class="toc-text">6. 问: 数组扩容的过程?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E9%97%AE-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E7%BA%A2%E9%BB%91%E6%A0%91-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E4%B8%80%E7%9B%B4%E4%BD%BF%E7%94%A8%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-number">1.7.</span> <span class="toc-text">7. 问: 为什么要使用红黑树? 为什么不一直使用红黑树?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E9%97%AE-HashMap-%E7%9A%84%E5%BA%95%E5%B1%82%E6%95%B0%E7%BB%84%E9%95%BF%E5%BA%A6%E4%B8%BA%E4%BD%95%E6%80%BB%E6%98%AF-2-n"><span class="toc-number">1.8.</span> <span class="toc-text">8. 问: HashMap 的底层数组长度为何总是 $2^n$ ?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E9%97%AE-HashMap-LinkedHashMap-TreeMap-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">1.9.</span> <span class="toc-text">9. 问: HashMap, LinkedHashMap, TreeMap 有什么区别?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E9%97%AE-HashMap-%E7%9A%84%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8%E4%BD%93%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-number">1.10.</span> <span class="toc-text">10. 问: HashMap 的线程不安全体现在哪里?</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%97%AE-%E4%BB%80%E4%B9%88%E6%98%AFAQS"><span class="toc-number">1.</span> <span class="toc-text">1. 问: 什么是AQS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%97%AE-AQS%E7%9A%84%E4%B8%A4%E5%A4%A7%E9%87%8D%E8%A6%81%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">2. 问: AQS的两大重要组成部分?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A0-%E7%8A%B6%E6%80%81%E5%8F%98%E9%87%8F-state"><span class="toc-number">2.1.</span> <span class="toc-text">①. 状态变量 state</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A1-CHL-%E9%98%9F%E5%88%97"><span class="toc-number">2.2.</span> <span class="toc-text">②. CHL 队列</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%97%AE-AQS-%E7%8B%AC%E5%8D%A0%E9%94%81%E8%8E%B7%E5%8F%96-%E9%87%8A%E6%94%BE%E9%94%81%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">3. 问: AQS 独占锁获取&#x2F;释放锁的原理?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%97%AE-%E4%BB%80%E4%B9%88%E6%98%AF%E5%93%A8%E5%85%B5%E8%8A%82%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">4. 问: 什么是哨兵节点?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%97%AE-waitStatus-%E6%98%AF%E4%BB%80%E4%B9%88-%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">5. 问: waitStatus 是什么? 有什么作用?</span></a></li></ol>
                     </div>
                 </span>
             </div>

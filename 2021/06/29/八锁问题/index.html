@@ -16,7 +16,7 @@
 <meta property="og:description" content="场景一1234567891011121314151617181920212223import java.util.concurrent.TimeUnit;&#x2F;** 标准情况下 是先执行A方法　还是先执行B方法?* 答案：先执行A方法* 解释：被 synchronized 修饰的方式, 锁的对象是方法的调用者* 所以说这里两个方法调用的对象是同一个, 先调用的先执行!*&#x2F;public class Ma">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-29T07:46:34.000Z">
-<meta property="article:modified_time" content="2021-06-26T10:53:59.636Z">
+<meta property="article:modified_time" content="2021-06-26T12:58:49.948Z">
 <meta property="article:author" content="我爱喝旺仔">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="多线程">
@@ -200,6 +200,8 @@
 
 <hr>
 <h3 id="场景八"><a href="#场景八" class="headerlink" title="场景八"></a>场景八</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 两个对象 一个静态方法一个普通方法 是先执行A方法 还是先执行B方法</span></span><br><span class="line"><span class="comment">* 答案：先执行B方法</span></span><br><span class="line"><span class="comment">* 解释：被锁的不是同一个调用者</span></span><br><span class="line"><span class="comment">* 一个被锁的是类, 一个被锁的是对象</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Test test1 = <span class="keyword">new</span> Test();</span><br><span class="line">        Test test2 = <span class="keyword">new</span> Test();</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;test1.A();&#125;, <span class="string">&quot;A&quot;</span>).start();</span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;test1.B();&#125;, <span class="string">&quot;B&quot;</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">A</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            TimeUnit.SECONDS.sleep(<span class="number">3</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;执行了A方法!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">B</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;执行了B方法!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
 
       
 
@@ -514,11 +516,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">锁</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
             
             <div class="clearfix"></div>
