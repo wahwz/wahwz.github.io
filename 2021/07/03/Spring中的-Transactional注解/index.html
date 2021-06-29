@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://wahwz.github.io">
-  <title>我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎</title>
+  <title>Spring中的@Transactional注解 | 我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎">
-<meta property="og:url" content="https://wahwz.github.io/index.html">
+  <meta name="description" content="Spring中的@Transactional(rollbackFor &#x3D; Exception.class)属性详解序言今天我在写代码的时候，看到了一个注解 @Transactional(rollbackFor &#x3D; Exception.class)，索性去网上查了查，把它搞懂了，今天就和大家分享一下，这个注解的用法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring中的@Transactional注解">
+<meta property="og:url" content="https://wahwz.github.io/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/index.html">
 <meta property="og:site_name" content="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎">
+<meta property="og:description" content="Spring中的@Transactional(rollbackFor &#x3D; Exception.class)属性详解序言今天我在写代码的时候，看到了一个注解 @Transactional(rollbackFor &#x3D; Exception.class)，索性去网上查了查，把它搞懂了，今天就和大家分享一下，这个注解的用法。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wahwz.github.io/assets/img/7.png">
+<meta property="article:published_time" content="2021-07-03T07:24:32.000Z">
+<meta property="article:modified_time" content="2021-06-29T15:32:12.958Z">
 <meta property="article:author" content="我爱喝旺仔">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wahwz.github.io/assets/img/7.png">
   
     <link rel="alternative" href="/atom.xml" title="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎" type="application/atom+xml">
   
@@ -143,107 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Java动态代理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Spring中的-Transactional注解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/04/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">Java动态代理</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/04/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-07-04T15:28:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="目前Java的动态代理实现分为两种"><a href="#目前Java的动态代理实现分为两种" class="headerlink" title="目前Java的动态代理实现分为两种"></a>目前Java的动态代理实现分为两种</h3><ul>
-<li><strong>基于JDK的动态代理</strong></li>
-<li><strong>基于CGILB的动态代理</strong></li>
-</ul>
-<p>在业务中使用动态代理，一般是为了给需要实现的方法添加预处理或者添加后续操作，但是不干预实现类的正常业务，把一些基本业务和主要的业务逻辑分离，也就是我们说的”解耦”思想。我们一般所熟知的 Spring 的 AOP 原理就是基于动态代理实现的。</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/04/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring中的-Transactional注解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/">Spring中的@Transactional注解</a>
+    <h1 class="article-title" itemprop="name">
+      Spring中的@Transactional注解
     </h1>
   
 
@@ -257,18 +172,136 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Spring中的-Transactional-rollbackFor-Exception-class-属性详解"><a href="#Spring中的-Transactional-rollbackFor-Exception-class-属性详解" class="headerlink" title="Spring中的@Transactional(rollbackFor = Exception.class)属性详解"></a>Spring中的@Transactional(rollbackFor = Exception.class)属性详解</h2><h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>今天我在写代码的时候，看到了一个注解 @Transactional(rollbackFor = Exception.class)，索性去网上查了查，把它搞懂了，今天就和大家分享一下，这个注解的用法。</p>
-        
+<span id="more"></span>
+
+<hr>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>如下图所示，我们都知道 Exception 分为运行时异常 RuntimeException 和非运行时异常（error是一定会回滚的）：</p>
+<p><img src="https://wahwz.github.io/assets/img/7.png" alt="异常.png"></p>
+<p>如果不对运行时异常进行处理，那么出现运行时异常之后，要么是线程中止，要么是主程序终止。<br>如果不想终止，则必须捕获所有的运行时异常，决不让这个处理线程退出。队列里面出现异常数据了，正常的处理应该是把异常数据舍弃，然后记录日志。不应该由于异常数据而影响下面对正常数据的处理。</p>
+<p>非运行时异常是 RuntimeException 以外的异常，类型上都属于 Exception 类及其子类。如 IOException、SQLException 等以及用户自定义的 Exception 异常。对于这种异常，JAVA 编译器强制要求我们必需对出现的这些异常进行 catch 并处理，否则程序就不能编译通过。所以，面对这种异常不管我们是否愿意，只能自己去写一大堆 catch 块去处理可能的异常。</p>
+<hr>
+<h3 id="事务管理方式"><a href="#事务管理方式" class="headerlink" title="事务管理方式"></a>事务管理方式</h3><p>事务管理对于企业应用来说是至关重要的，即使出现异常情况，它也可以保证数据的一致性。</p>
+<p>Spring 支持编程式事务管理和声明式事务管理两种方式。</p>
+<p>编程式事务管理使用 TransactionTemplate 或者直接使用底层的 PlatformTransactionManager 。对于编程式事务管理，Spring 推荐使用 TransactionTemplate。</p>
+<p>声明式事务管理建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。</p>
+<p>声明式事务管理也有两种常用的方式，一种是基于 tx 和 aop 名字空间的 xml 配置文件，另一种就是基于 @Transactional 注解。显然基于注解的方式更简单易用，更清爽。</p>
+<hr>
+<h3 id="使用声明"><a href="#使用声明" class="headerlink" title="使用声明"></a>使用声明</h3><p>当作用于类上时，该类的所有 public 方法将都具有该类型的事务属性，同时，我们也可以在方法级别使用该标注来覆盖类级别的定义。</p>
+<p>在项目中，@Transactional(rollbackFor=Exception.class) ，如果类加了这个注解，那么这个类里面的方法抛出异常，就会回滚，数据库里面的数据也会回滚。</p>
+<p>在 @Transactional 注解中如果不配置 rollbackFor 属性,那么事务只会在遇到 RuntimeException 的时候才会回滚,加上 rollbackFor=Exception.class ，可以让事务在遇到非运行时异常时也回滚。</p>
+<hr>
+<h3 id="Transactional注解的全部属性详解"><a href="#Transactional注解的全部属性详解" class="headerlink" title="@Transactional注解的全部属性详解"></a>@Transactional注解的全部属性详解</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>String</td>
+<td>可选的限定描述符，指定使用的事务管理器</td>
+</tr>
+<tr>
+<td>propagation</td>
+<td>enum: Propagation</td>
+<td>可选的事务传播行为设置</td>
+</tr>
+<tr>
+<td>isolation</td>
+<td>enum: Isolation</td>
+<td>可选的事务隔离级别设置</td>
+</tr>
+<tr>
+<td>readOnly</td>
+<td>boolean</td>
+<td>读写或只读事务，默认读写</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>int (in seconds granularity)</td>
+<td>事务超时时间设置</td>
+</tr>
+<tr>
+<td>rollbackFor</td>
+<td>Class对象数组，必须继承自Throwable</td>
+<td>导致事务回滚的异常类数组</td>
+</tr>
+<tr>
+<td>rollbackForClassName</td>
+<td>类名数组，必须继承自Throwable</td>
+<td>导致事务回滚的异常类名字数组</td>
+</tr>
+<tr>
+<td>noRollbackFor</td>
+<td>Class对象数组，必须继承自Throwable</td>
+<td>不会导致事务回滚的异常类数组</td>
+</tr>
+<tr>
+<td>noRollbackForClassName</td>
+<td>类名数组，必须继承自Throwable</td>
+<td>不会导致事务回滚的异常类名字数组</td>
+</tr>
+</tbody></table>
+<hr>
+
       
 
 	<!-- 增加版权声明 -->
 
 	
 	
-	  <div class="declare" hidden="hidden"></div>
+	  <div class="declare">
+		<strong>本文作者：</strong>
+		
+		  我爱喝旺仔
+		
+		<br>
+		<strong>本文链接：</strong>
+		<a rel="license" href="https://wahwz.github.io/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/">https://wahwz.github.io/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/</a>
+		<br>
+		<strong>版权声明：</strong>
+		本作品采用
+		<a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+		进行许可。转载请注明出处！
+		
+	  </div>
 	
 
 	<!-- 增加版权声明结束 -->
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfbzf.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wxzf.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -292,16 +325,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wahwz.github.io/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/07/04/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Java动态代理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">AQS面试题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -316,624 +417,32 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-AQS面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/">AQS面试题</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2021-07-02T03:02:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-问-什么是AQS"><a href="#1-问-什么是AQS" class="headerlink" title="1. 问: 什么是AQS?"></a><strong>1. 问: 什么是AQS?</strong></h3><p>答: AQS 全称 AbstractQueuedSynchronizer (抽象的队列同步器), 是除了 Java 自带的 synchronized 关键字之外的锁机制</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">锁</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E4%B8%AD%E7%9A%84-Transactional-rollbackFor-Exception-class-%E5%B1%9E%E6%80%A7%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">Spring中的@Transactional(rollbackFor &#x3D; Exception.class)属性详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%8F%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">序言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8"><span class="toc-number">1.2.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">事务管理方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%A3%B0%E6%98%8E"><span class="toc-number">1.4.</span> <span class="toc-text">使用声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transactional%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%85%A8%E9%83%A8%E5%B1%9E%E6%80%A7%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.5.</span> <span class="toc-text">@Transactional注解的全部属性详解</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
   
-    <article id="post-单例模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
-    </h1>
   
 
-        
-        <a href="/2021/07/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2021-07-01T01:50:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>单例模式是 Java 中最简单的设计模式之一, 这种类型的设计模式属于创建型模式, 它提供了一种创建对象的最佳方式</p>
-<p>这种模式涉及到一个单一的类, 该类负责创建自己的对象, 同时确保只有单个对象被创建, 这个类提供了一种访问其唯一的对象的方式, 可以直接访问, 不需要实例化该类的对象</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-线程池" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/30/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">线程池</a>
-    </h1>
   
 
-        
-        <a href="/2021/06/30/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="archive-article-date">
-  	<time datetime="2021-06-30T12:38:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一般在创建线程池的时候会使用工具类(Executors)来创建线程池, 其中有几个常见的创建方式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建只有一个线程的线程池</span></span><br><span class="line">ExecutorService executorService1 = Executors.newSingleThreadExecutor();</span><br><span class="line"><span class="comment">// 创建一个固定大小的线程池</span></span><br><span class="line">ExecutorService executorService2 = Executors.newFixedThreadPool(<span class="number">5</span>);</span><br><span class="line"><span class="comment">// 创建一个可以自由伸缩的线程池</span></span><br><span class="line">ExecutorService executorService3 = Executors.newCachedThreadPool();</span><br><span class="line">但是通过阅读源码我发现, 这样创建线程池会有弊端</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">                                  <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/30/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-八锁问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/29/%E5%85%AB%E9%94%81%E9%97%AE%E9%A2%98/">八锁问题</a>
-    </h1>
   
 
-        
-        <a href="/2021/06/29/%E5%85%AB%E9%94%81%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2021-06-29T07:46:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 标准情况下 是先执行A方法　还是先执行B方法?</span></span><br><span class="line"><span class="comment">* 答案：先执行A方法</span></span><br><span class="line"><span class="comment">* 解释：被 synchronized 修饰的方式, 锁的对象是方法的调用者</span></span><br><span class="line"><span class="comment">* 所以说这里两个方法调用的对象是同一个, 先调用的先执行!</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Test test = <span class="keyword">new</span> Test();</span><br><span class="line">        <span class="keyword">new</span> Thread(test::A, <span class="string">&quot;A&quot;</span>).start();</span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(test::B, <span class="string">&quot;B&quot;</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">A</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;执行了A方法!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">B</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;执行了B方法!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/29/%E5%85%AB%E9%94%81%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java源码【HashMap】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/">Java源码【HashMap】</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/" class="archive-article-date">
-  	<time datetime="2021-06-28T10:20:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="注-本篇博客是按照JDK1-8中的-HashMap-展开的"><a href="#注-本篇博客是按照JDK1-8中的-HashMap-展开的" class="headerlink" title="注: 本篇博客是按照JDK1.8中的 HashMap 展开的"></a>注: 本篇博客是按照JDK1.8中的 HashMap 展开的</h2><h3 id="1-问-HashMap-的数据结构"><a href="#1-问-HashMap-的数据结构" class="headerlink" title="1. 问: HashMap 的数据结构?"></a><strong>1. 问: HashMap 的数据结构?</strong></h3><p>答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java源码【LinkedList】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/27/Java%E6%BA%90%E7%A0%81%E3%80%90LinkedList%E3%80%91/">Java源码【LinkedList】</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/27/Java%E6%BA%90%E7%A0%81%E3%80%90LinkedList%E3%80%91/" class="archive-article-date">
-  	<time datetime="2021-06-27T09:42:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h2><h4 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;    <span class="comment">// 容量</span></span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;    <span class="comment">// 头节点</span></span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;    <span class="comment">// 尾节点</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    E item;</span><br><span class="line">    Node&lt;E&gt; next;</span><br><span class="line">    Node&lt;E&gt; prev;</span><br><span class="line"></span><br><span class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.item = element;</span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line">        <span class="keyword">this</span>.prev = prev;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/27/Java%E6%BA%90%E7%A0%81%E3%80%90LinkedList%E3%80%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java源码【ArrayList】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/26/Java%E6%BA%90%E7%A0%81%E3%80%90ArrayList%E3%80%91/">Java源码【ArrayList】</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/26/Java%E6%BA%90%E7%A0%81%E3%80%90ArrayList%E3%80%91/" class="archive-article-date">
-  	<time datetime="2021-06-26T09:20:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><h4 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size;    <span class="comment">// 实际元素个数</span></span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;    <span class="comment">// 数据域</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;    <span class="comment">// 默认数据域容量大小</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;    <span class="comment">// 用于有参构造函数</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;    <span class="comment">// 用于无参构造函数</span></span><br></pre></td></tr></table></figure>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/26/Java%E6%BA%90%E7%A0%81%E3%80%90ArrayList%E3%80%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -958,8 +467,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
