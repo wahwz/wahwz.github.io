@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://wahwz.github.io">
-  <title>我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎</title>
+  <title>Java类加载过程 | 我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎">
-<meta property="og:url" content="https://wahwz.github.io/index.html">
+  <meta name="description" content="Java类加载过程一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）和卸载（Unloading）七个阶段，其中验证、准备、解析三个部分统称为连接（Linking）。这七个阶段的发生顺序如下图所示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java类加载过程">
+<meta property="og:url" content="https://wahwz.github.io/2021/07/07/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/index.html">
 <meta property="og:site_name" content="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎">
+<meta property="og:description" content="Java类加载过程一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）和卸载（Unloading）七个阶段，其中验证、准备、解析三个部分统称为连接（Linking）。这七个阶段的发生顺序如下图所示">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wahwz.github.io/assets/img/13.png">
+<meta property="article:published_time" content="2021-07-07T01:53:55.000Z">
+<meta property="article:modified_time" content="2021-07-02T01:56:17.335Z">
 <meta property="article:author" content="我爱喝旺仔">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wahwz.github.io/assets/img/13.png">
   
     <link rel="alternative" href="/atom.xml" title="我爱喝旺仔 - 🌸愿得一人心,白首不相离🍎" type="application/atom+xml">
   
@@ -143,16 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Java类加载过程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Java类加载过程" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/07/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/">Java类加载过程</a>
+    <h1 class="article-title" itemprop="name">
+      Java类加载过程
     </h1>
   
 
@@ -166,18 +172,93 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Java类加载过程"><a href="#Java类加载过程" class="headerlink" title="Java类加载过程"></a>Java类加载过程</h2><p>一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）和卸载（Unloading）七个阶段，其中验证、准备、解析三个部分统称为连接（Linking）。这七个阶段的发生顺序如下图所示：</p>
-        
+<span id="more"></span>
+
+<p><img src="https://wahwz.github.io/assets/img/13.png" alt="类加载.png"></p>
+<p>在上述七个阶段中，包括了类加载的全过程，即加载、验证、准备、解析和初始化这五个阶段。</p>
+<hr>
+<h3 id="一、加载"><a href="#一、加载" class="headerlink" title="一、加载"></a>一、加载</h3><p>“加载”（Loading）阶段是整个“类加载”（Class Loading）过程中的一个阶段，在加载阶段，Java虚拟机需要完成以下三件事情： </p>
+<ol>
+<li>通过一个类的全限定名来获取定义此类的二进制字节流。 </li>
+<li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。 </li>
+<li>在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口。</li>
+</ol>
+<p>加载阶段结束后，Java 虚拟机外部的二进制字节流就按照虚拟机所设定的格式存储在方法区之中了，方法区中的数据存储格式完全由虚拟机实现自行定义，《Java虚拟机规范》未规定此区域的具体数据结构。类型数据妥善安置在方法区之后，会在 Java 堆内存中实例化一个 java.lang.Class 类的对象，这个对象将作为程序访问方法区中的类型数据的外部接口。</p>
+<hr>
+<h3 id="二、验证"><a href="#二、验证" class="headerlink" title="二、验证"></a>二、验证</h3><p>验证是连接阶段的第一步，这一阶段的目的是确保Class文件的字节流中包含的信息符合《Java虚拟机规范》的全部约束要求，保证这些信息被当作代码运行后不会危害虚拟机自身的安全。验证阶段大致上会完成下面四个阶段的检验动作：文件格式验证、元数据验证、字节码验证和符号引用验证。</p>
+<ol>
+<li>文件格式验证： 第一阶段要验证字节流是否符合Class文件格式的规范，并且能被当前版本的虚拟机处理。 </li>
+<li>元数据验证： 第二阶段是对字节码描述的信息进行语义分析，以保证其描述的信息符合《Java语言规范》的要求。 </li>
+<li>字节码验证： 第三阶段是通过数据流分析和控制流分析，确定程序语义是合法的、符合逻辑的。 </li>
+<li>符号引用验证： 符号引用验证可以看作是对类自身以外（常量池中的各种符号引用）的各类信息进行匹配性校验，通俗来说就是，该类是否缺少或者被禁止访问它依赖的某些外部类、方法、字段等资源。</li>
+</ol>
+<hr>
+<h3 id="三、准备"><a href="#三、准备" class="headerlink" title="三、准备"></a>三、准备</h3><p>准备阶段是正式为类中定义的变量（即静态变量，被 static 修饰的变量）分配内存并设置类变量初始值的阶段。从概念上讲，这些变量所使用的内存都应当在方法区中进行分配，但必须注意到方法区本身是一个逻辑上的区域，在 JDK7 及之前，HotSpot 使用永久代来实现方法区时，实现是完全符合这种逻辑概念的。而在JDK8 及之后，类变量则会随着 Class 对象一起存放在 Java 堆中，这时候“类变量在方法区”就完全是一种对逻辑概念的表述了。</p>
+<hr>
+<h3 id="四、解析"><a href="#四、解析" class="headerlink" title="四、解析"></a>四、解析</h3><p>解析阶段是Java虚拟机将常量池内的符号引用替换为直接引用的过程，符号引用在Class文件中以 CONSTANT_Class_info、CONSTANT_Fieldref_info、CONSTANT_Methodref_info 等类型的常量出现，那解析阶段中所说的直接引用与符号引用又有什么关联呢？ </p>
+<p>符号引用（Symbolic References）：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能无歧义地定位到目标即可。符号引用与虚拟机实现的内存布局无关，引用的目标并不一定是已经加载到虚拟机内存当中的内容。各种虚拟机实现的内存布局可以各不相同，但是它们能接受的符号引用必须都是一致的，因为符号引用的字面量形式明确定义在《Java虚拟机规范》的 Class 文件格式中。 </p>
+<p>直接引用（Direct References）：直接引用是可以直接指向目标的指针、相对偏移量或者是一个能间接定位到目标的句柄。直接引用是和虚拟机实现的内存布局直接相关的，同一个符号引用在不同虚拟机实例上翻译出来的直接引用一般不会相同。如果有了直接引用，那引用的目标必定已经在虚拟机的内存中存在。</p>
+<hr>
+<h3 id="五、初始化"><a href="#五、初始化" class="headerlink" title="五、初始化"></a>五、初始化</h3><p>类的初始化阶段是类加载过程的最后一个步骤，之前介绍的几个类加载的动作里，除了在加载阶段用户应用程序可以通过自定义类加载器的方式局部参与外，其余动作都完全由 Java 虚拟机来主导控制。直到初始化阶段，Java 虚拟机才真正开始执行类中编写的 Java 程序代码，将主导权移交给应用程序。</p>
+<p>进行准备阶段时，变量已经赋过一次系统要求的初始零值，而在初始化阶段，则会根据程序员通过程序编码制定的主观计划去初始化类变量和其他资源。我们也可以从另外一种更直接的形式来表达：初始化阶段就是执行类构造器 () 方法的过程。 () 并不是程序员在 Java 代码中直接编写的方法，它是 Javac 编译器的自动生成物。</p>
+<hr>
+
       
 
 	<!-- 增加版权声明 -->
 
 	
 	
-	  <div class="declare" hidden="hidden"></div>
+	  <div class="declare">
+		<strong>本文作者：</strong>
+		
+		  我爱喝旺仔
+		
+		<br>
+		<strong>本文链接：</strong>
+		<a rel="license" href="https://wahwz.github.io/2021/07/07/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/">https://wahwz.github.io/2021/07/07/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</a>
+		<br>
+		<strong>版权声明：</strong>
+		本作品采用
+		<a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+		进行许可。转载请注明出处！
+		
+	  </div>
 	
 
 	<!-- 增加版权声明结束 -->
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/zfbzf.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wxzf.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -201,16 +282,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/07/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wahwz.github.io/2021/07/07/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2021/07/06/Java%E9%94%81%E5%8D%87%E7%BA%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java锁升级</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -225,806 +365,32 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java锁升级" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/06/Java%E9%94%81%E5%8D%87%E7%BA%A7/">Java锁升级</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/06/Java%E9%94%81%E5%8D%87%E7%BA%A7/" class="archive-article-date">
-  	<time datetime="2021-07-06T12:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Java锁升级机制"><a href="#Java锁升级机制" class="headerlink" title="Java锁升级机制"></a>Java锁升级机制</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JDK1.6 之前，synchronized 还是一个重量级锁，是一个效率比较低下的锁。但是在 JDK 1.6 后，JVM 为了提高锁的获取与释放效率对 synchronized 进行了优化，引入了偏向锁和轻量级锁，从此以后锁的状态就有了四种：无锁、偏向锁、轻量级锁、重量级锁。并且四种状态会随着竞争的情况逐渐升级，而且是不可逆的过程，即不可降级，这四种锁的级别由低到高依次是：无锁、偏向锁，轻量级锁，重量级锁。如下图所示：</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">锁</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/06/Java%E9%94%81%E5%8D%87%E7%BA%A7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">Java类加载过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.1.</span> <span class="toc-text">一、加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%AA%8C%E8%AF%81"><span class="toc-number">1.2.</span> <span class="toc-text">二、验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%87%86%E5%A4%87"><span class="toc-number">1.3.</span> <span class="toc-text">三、准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%A7%A3%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">四、解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.5.</span> <span class="toc-text">五、初始化</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-SpringBoot自动配置原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/05/SpringBoot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/">SpringBoot自动配置原理</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/05/SpringBoot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-07-05T03:04:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="SpringBoot自动配置原理入门"><a href="#SpringBoot自动配置原理入门" class="headerlink" title="SpringBoot自动配置原理入门"></a>SpringBoot自动配置原理入门</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>不知道大家是不是和我一样好奇，为什么我们在整合 Spring、SpringMVC 的时候要配置那么多的东西，而到了 SpringBoot 这里什么也不用配置就能利用其中的好多组件，下面我就带大家来探索一下 SpringBoot 的自动配置原理</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/05/SpringBoot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java动态代理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/04/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">Java动态代理</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/04/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-07-04T15:28:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="目前Java的动态代理实现分为两种"><a href="#目前Java的动态代理实现分为两种" class="headerlink" title="目前Java的动态代理实现分为两种"></a>目前Java的动态代理实现分为两种</h3><ul>
-<li><strong>基于JDK的动态代理</strong></li>
-<li><strong>基于CGILB的动态代理</strong></li>
-</ul>
-<p>在业务中使用动态代理，一般是为了给需要实现的方法添加预处理或者添加后续操作，但是不干预实现类的正常业务，把一些基本业务和主要的业务逻辑分离，也就是我们说的”解耦”思想。我们一般所熟知的 Spring 的 AOP 原理就是基于动态代理实现的。</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/04/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring中的-Transactional注解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/">Spring中的@Transactional注解</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2021-07-03T07:24:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Spring中的-Transactional-rollbackFor-Exception-class-属性详解"><a href="#Spring中的-Transactional-rollbackFor-Exception-class-属性详解" class="headerlink" title="Spring中的@Transactional(rollbackFor = Exception.class)属性详解"></a>Spring中的@Transactional(rollbackFor = Exception.class)属性详解</h2><h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>今天我在写代码的时候，看到了一个注解 @Transactional(rollbackFor = Exception.class)，索性去网上查了查，把它搞懂了，今天就和大家分享一下，这个注解的用法。</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/03/Spring%E4%B8%AD%E7%9A%84-Transactional%E6%B3%A8%E8%A7%A3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-AQS面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/">AQS面试题</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2021-07-02T03:02:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-问-什么是AQS"><a href="#1-问-什么是AQS" class="headerlink" title="1. 问: 什么是AQS?"></a><strong>1. 问: 什么是AQS?</strong></h3><p>答: AQS 全称 AbstractQueuedSynchronizer (抽象的队列同步器), 是除了 Java 自带的 synchronized 关键字之外的锁机制</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">锁</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/02/AQS%E9%9D%A2%E8%AF%95%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-单例模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2021-07-01T01:50:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>单例模式是 Java 中最简单的设计模式之一, 这种类型的设计模式属于创建型模式, 它提供了一种创建对象的最佳方式</p>
-<p>这种模式涉及到一个单一的类, 该类负责创建自己的对象, 同时确保只有单个对象被创建, 这个类提供了一种访问其唯一的对象的方式, 可以直接访问, 不需要实例化该类的对象</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-线程池" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/30/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">线程池</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/30/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="archive-article-date">
-  	<time datetime="2021-06-30T12:38:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一般在创建线程池的时候会使用工具类(Executors)来创建线程池, 其中有几个常见的创建方式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建只有一个线程的线程池</span></span><br><span class="line">ExecutorService executorService1 = Executors.newSingleThreadExecutor();</span><br><span class="line"><span class="comment">// 创建一个固定大小的线程池</span></span><br><span class="line">ExecutorService executorService2 = Executors.newFixedThreadPool(<span class="number">5</span>);</span><br><span class="line"><span class="comment">// 创建一个可以自由伸缩的线程池</span></span><br><span class="line">ExecutorService executorService3 = Executors.newCachedThreadPool();</span><br><span class="line">但是通过阅读源码我发现, 这样创建线程池会有弊端</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">                                  <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/30/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-八锁问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/29/%E5%85%AB%E9%94%81%E9%97%AE%E9%A2%98/">八锁问题</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/29/%E5%85%AB%E9%94%81%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2021-06-29T07:46:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 标准情况下 是先执行A方法　还是先执行B方法?</span></span><br><span class="line"><span class="comment">* 答案：先执行A方法</span></span><br><span class="line"><span class="comment">* 解释：被 synchronized 修饰的方式, 锁的对象是方法的调用者</span></span><br><span class="line"><span class="comment">* 所以说这里两个方法调用的对象是同一个, 先调用的先执行!</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Test test = <span class="keyword">new</span> Test();</span><br><span class="line">        <span class="keyword">new</span> Thread(test::A, <span class="string">&quot;A&quot;</span>).start();</span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(test::B, <span class="string">&quot;B&quot;</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">A</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;执行了A方法!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">B</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;执行了B方法!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/29/%E5%85%AB%E9%94%81%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java源码【HashMap】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/">Java源码【HashMap】</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/" class="archive-article-date">
-  	<time datetime="2021-06-28T10:20:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="注-本篇博客是按照JDK1-8中的-HashMap-展开的"><a href="#注-本篇博客是按照JDK1-8中的-HashMap-展开的" class="headerlink" title="注: 本篇博客是按照JDK1.8中的 HashMap 展开的"></a>注: 本篇博客是按照JDK1.8中的 HashMap 展开的</h2><h3 id="1-问-HashMap-的数据结构"><a href="#1-问-HashMap-的数据结构" class="headerlink" title="1. 问: HashMap 的数据结构?"></a><strong>1. 问: HashMap 的数据结构?</strong></h3><p>答: 在JDK1.8之前是数组 + 链表实现的, 在JDK1.8之后是数组+链表+红黑树实现的。</p>
-        
-      
-
-	<!-- 增加版权声明 -->
-
-	
-	
-	  <div class="declare" hidden="hidden"></div>
-	
-
-	<!-- 增加版权声明结束 -->
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/28/Java%E6%BA%90%E7%A0%81%E3%80%90HashMap%E3%80%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -1049,8 +415,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
